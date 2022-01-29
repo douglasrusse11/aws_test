@@ -8,7 +8,7 @@ exports.handler = async event => {
 
   let isAdmin = false;
 
-  const adminEmails = ['douglas.russell7@btinternet.com'];
+  const adminEmails = ['douglas.russell7@btinternet.com', 'agnieszka.koltun.89@gmail.com', 'mikaelplata@gmail.com'];
 
   if (adminEmails.indexOf(event.request.userAttributes.email) != -1) {
     isAdmin = true;
