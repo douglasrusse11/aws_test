@@ -1,6 +1,5 @@
 import {useState, useEffect} from 'react';
 import {Auth, Hub} from 'aws-amplify';
-import {Authenticator} from '@aws-amplify/ui-react';
 import Header from './Header';
 import Main from './Main';
 
@@ -13,7 +12,7 @@ const App = () => {
         Hub.listen('auth', (data) => {
             const { payload: { event }} = data
             console.log('event: ', event)
-            if (event == 'signIn' || event == 'signOut') getUser()
+            if (event === 'signIn' || event === 'signOut') getUser()
         })
     }, [])
 
