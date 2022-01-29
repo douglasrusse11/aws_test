@@ -1,0 +1,29 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-projecttest-dev-175329-authRole",
+      "UnauthRoleArn": "arn:aws:iam::264950887259:role/amplify-projecttest-dev-175329-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::264950887259:role/amplify-projecttest-dev-175329-authRole",
+      "Region": "eu-west-1",
+      "DeploymentBucketName": "amplify-projecttest-dev-175329-deployment",
+      "UnauthRoleName": "amplify-projecttest-dev-175329-unauthRole",
+      "StackName": "amplify-projecttest-dev-175329",
+      "StackId": "arn:aws:cloudformation:eu-west-1:264950887259:stack/amplify-projecttest-dev-175329/3544ed30-8063-11ec-859f-06e1f61c6fb9",
+      "AmplifyAppId": "d16z73okwj067s",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-projecttest-dev-175329-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
+    },
+    "categories": {
+      "auth": {
+        "projecttest08bba8bf": {},
+        "true": {}
+      },
+      "function": {
+        "projecttest08bba8bfPostConfirmation": {
+          "GROUP": "Admin",
+          "deploymentBucketName": "amplify-projecttest-dev-175329-deployment",
+          "s3Key": "amplify-builds/projecttest08bba8bfPostConfirmation-334c624c503538323050-build.zip"
+        }
+      }
+    }
+  }
+}
