@@ -21,7 +21,7 @@ const Form = ({onSubmit, formData, setFormData}) => {
                         .then(data => setAddressList(data));
                     setLastRequest(Date.now());
                 }
-            if (addressList.length != 0) {
+            if (addressList.length !== 0) {
                 setFormData({
                     ...formData, [e.target.name]: e.target.value, latlng: [addressList[0].lat, addressList[0].lon]
                 })
