@@ -30,7 +30,6 @@ const App = () => {
 
     return (
         <>
-        <Header user={user} />
         <Main user={user}/>
         </>
     )

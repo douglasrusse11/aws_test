@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Auth } from 'aws-amplify';
 import { Authenticator } from '@aws-amplify/ui-react';
+import { Link } from 'react-router-dom';
 import '@aws-amplify/ui-react/styles.css';
 
 const Header = function({user}) {
@@ -11,7 +12,9 @@ const Header = function({user}) {
         <>
         <div style={styles.container}>
             <div style={styles.headings}>
-                <h1 style={styles.heading}>HopeN (for food)</h1>
+                <Link to="/" style={{textDecoration: 'none'}}>
+                    <h1 style={styles.heading}>HopeN (for food)</h1>
+                </Link>
                 { user ? <h1 style={styles.heading} onClick={() => {Auth.signOut(); setDisplayLogin(false)}}>Sign Out</h1> : <h1 style={styles.heading} onClick={() => setDisplayLogin(!displayLogin)}>Sign In</h1> }
             </div>
         </div>

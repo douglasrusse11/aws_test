@@ -23,7 +23,7 @@ const Form = ({onSubmit, formData, setFormData}) => {
                 }
             if (addressList.length !== 0) {
                 setFormData({
-                    ...formData, [e.target.name]: e.target.value, latlng: [addressList[0].lat, addressList[0].lon]
+                    ...formData, [e.target.name]: e.target.value, latlng: [parseFloat(addressList[0].lat), parseFloat(addressList[0].lon)]
                 })
             } else {
                 setFormData({
