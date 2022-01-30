@@ -2,7 +2,12 @@ import {useState, useEffect} from 'react';
 import { DataStore } from '@aws-amplify/datastore';
 import { Restaurant } from './models';
 import Form from './Form';
-import Map from './Map';
+import Home from './Home';
+import Nav from './Nav';
+import RestaurantList from './RestaurantList';
+import RestaurantComponent from './Restaurant';
+import { Routes, Route, BrowserRouter, Link } from 'react-router-dom';
+import Header from './Header';
 
 const initialState = {
     name: '',
@@ -53,15 +58,17 @@ function Main({user}) {
         await DataStore.delete(restaurant);
     }
 
-    const displayRestaurants = () => {
-        return restaurants.map(restaurant => (
+    const displayRestaurants = (restaurantList) => {
+        return restaurantList.map(restaurant => (
             <div key={restaurant.id}>
             <div style={styles.restaurant}>
-                <div>
-                <h3 style={styles.heading}>{restaurant.name}</h3>
-                <h4 style={styles.heading}>{restaurant.style}</h4>
-                <h5 style={styles.heading}>{restaurant.address}</h5>
-                </div>
+                <Link to={`/restaurants/${restaurant.id}`} style={{textDecoration: 'none'}}>
+                    <div>
+                    <h3 style={styles.heading}>{restaurant.name}</h3>
+                    <h4 style={styles.heading}>{restaurant.style}</h4>
+                    <h5 style={styles.heading}>{restaurant.address}</h5>
+                    </div>
+                </Link>
                 <div>
                 { user && user.isAdmin && (
                     <>
@@ -80,13 +87,37 @@ function Main({user}) {
         ))
     }
 
-    return (
-        <>
-            <Map restaurants={restaurants}/>
+    const displayForm = (style) => {
+        return (
             <div style={styles.container}>
-                {displayRestaurants()}
                 {user && user.isAdmin && (displayAddNew ? <button onClick={() => {setFormData(initialState); setDisplayUpdateForm({id: 0, display: false}); setDisplayAddNew(false)}}>Add new</button> : <Form onSubmit={createRestaurant} formData={formData} setFormData={setFormData} />)}
             </div>
+        )
+    }
+
+    const getStyles = () => {
+        return Array.from(new Set(restaurants.map(r => r.style)));
+    }
+    const getRoutes = () => {
+        return getStyles().map(style => {
+            return (
+                <Route path={`restaurants/bystyle/${style}`} element={<RestaurantList restaurantList={restaurants.filter(r => r.style === style)} displayRestaurants={displayRestaurants} displayForm={displayForm} />} />
+            )
+        })
+    }
+
+    return (
+        <>
+        <BrowserRouter>
+            <Header user={user} />
+            <Nav styleList={getStyles()} />
+            <Routes>
+                <Route path="/" element={<Home />} />
+                { getRoutes() }
+                <Route path="/restaurants/:id" element={<RestaurantComponent displayRestaurants={displayRestaurants} />} />
+            </Routes>
+            
+        </BrowserRouter>
         </>
     )
 }
