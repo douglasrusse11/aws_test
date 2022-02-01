@@ -20,8 +20,10 @@ export const schema = {
                 "style": {
                     "name": "style",
                     "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
+                    "type": {
+                        "enum": "Style"
+                    },
+                    "isRequired": true,
                     "attributes": []
                 },
                 "latlng": {
@@ -82,7 +84,21 @@ export const schema = {
             ]
         }
     },
-    "enums": {},
+    "enums": {
+        "Style": {
+            "name": "Style",
+            "values": [
+                "Greek",
+                "Pub",
+                "Buffet",
+                "Mexican",
+                "Tapas",
+                "Indian",
+                "Cafe",
+                "Pizza"
+            ]
+        }
+    },
     "nonModels": {},
-    "version": "c8a086e67e1edc6836d10059266711eb"
+    "version": "c4e99379e51deac93f8524f13631a47f"
 };

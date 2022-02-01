@@ -11,7 +11,6 @@ const App = () => {
         getUser()
         Hub.listen('auth', (data) => {
             const { payload: { event }} = data
-            console.log('event: ', event)
             if (event === 'signIn' || event === 'signOut') getUser()
         })
     }, [])
@@ -19,7 +18,6 @@ const App = () => {
     const getUser = async () => {
         try {
             const data = await Auth.currentAuthenticatedUser();
-            console.log('data: ', data)
             const userInfo = {username: data.username, isAdmin: data.signInUserSession.idToken.payload['cognito:groups'] && data.signInUserSession.idToken.payload['cognito:groups'].includes('Admin'), ...data.attributes};
             setUser(userInfo);
         } catch (err) {

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Style } from './models';
 
 const Form = ({onSubmit, formData, setFormData}) => {
 
@@ -46,7 +47,11 @@ const Form = ({onSubmit, formData, setFormData}) => {
                 ))}
             </datalist>
             <input type="text" placeholder="Name" name="name" value={formData.name} onChange={onChange} />
-            <input type="text" placeholder="Style" name="style" value={formData.style} onChange={onChange} />
+            <select name="style" onChange={onChange} defaultValue={formData.style} >
+                    { Object.values(Style).map((style, index) => (
+                            <option key={`styleOption_${index}`} value={style} >{style}</option>
+                    ))}
+            </select>
             <input type="number" placeholder="Latitude" name="lat" value={formData.latlng[0]} step="0.00001" onChange={onChange} />
             <input type="number" placeholder="Longitude" name="lng" value={formData.latlng[1]} step="0.00001" onChange={onChange} />
             <button onClick={onSubmit}>Submit</button>

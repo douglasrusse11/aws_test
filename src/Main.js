@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import { DataStore } from '@aws-amplify/datastore';
-import { Restaurant } from './models';
+import { Restaurant, Style } from './models';
 import Form from './Form';
 import Home from './Home';
 import Nav from './Nav';
@@ -19,21 +19,8 @@ const initialState = {
 function Main({user}) {
 
     const [formData, setFormData] = useState(initialState);
-    const [restaurants, setRestaurants] = useState([]);
     const [displayUpdateForm, setDisplayUpdateForm] = useState({id: 0, display: false})
     const [displayAddNew, setDisplayAddNew] = useState(true);
-
-    useEffect(() => {
-        fetchRestaurants();
-        const subscription = DataStore.observe(Restaurant)
-                                      .subscribe(() => fetchRestaurants())
-        return () => subscription.unsubscribe()
-      }, []);
-
-    const fetchRestaurants = () => {
-        DataStore.query(Restaurant)
-            .then(data => setRestaurants(data));
-    }
 
     const createRestaurant = async () => {
         if (!formData.name) return
@@ -90,30 +77,19 @@ function Main({user}) {
     const displayForm = (style) => {
         return (
             <div style={styles.container}>
-                {user && user.isAdmin && (displayAddNew ? <button onClick={() => {setFormData(initialState); setDisplayUpdateForm({id: 0, display: false}); setDisplayAddNew(false)}}>Add new</button> : <Form onSubmit={createRestaurant} formData={formData} setFormData={setFormData} />)}
+                {user && user.isAdmin && (displayAddNew ? <button onClick={() => {setFormData(initialState); setDisplayUpdateForm({id: 0, display: false}); setDisplayAddNew(false)}}>Add new</button> : <Form onSubmit={createRestaurant} formData={{...formData, style: style}} setFormData={setFormData} />)}
             </div>
         )
-    }
-
-    const getStyles = () => {
-        return Array.from(new Set(restaurants.map(r => r.style)));
-    }
-    const getRoutes = () => {
-        return getStyles().map(style => {
-            return (
-                <Route path={`restaurants/bystyle/${style}`} element={<RestaurantList restaurantList={restaurants.filter(r => r.style === style)} displayRestaurants={displayRestaurants} displayForm={displayForm} />} />
-            )
-        })
     }
 
     return (
         <>
         <BrowserRouter>
             <Header user={user} />
-            <Nav styleList={getStyles()} />
+            <Nav />
             <Routes>
                 <Route path="/" element={<Home />} />
-                { getRoutes() }
+                <Route path="/restaurants/bystyle/:style" element={<RestaurantList displayRestaurants={displayRestaurants} displayForm={displayForm} />} />
                 <Route path="/restaurants/:id" element={<RestaurantComponent displayRestaurants={displayRestaurants} />} />
             </Routes>
             

@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
+import { Style } from './models';
 
-const Nav = ({ styleList }) => {
+const Nav = () => {
 
     return (
         <div style={navStyle}>
-        { styleList &&  (
-            styleList.map((style, index) => (
+        { (
+            Object.values(Style).map((style, index) => (
                 <Link style={linkStyle} key={`style_${index}`} to={`/restaurants/bystyle/${style}`}>
                     <h3 style={headerStyle}>{style}</h3>
                 </Link>
